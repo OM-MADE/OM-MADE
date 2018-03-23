@@ -9,7 +9,7 @@ This paper details all technical aspects of OM-MADE, the hypothesis, the equatio
 
 # Installation
 
-This package needs a Python version >=3.3 . Furthermore it uses numpy and matplotlib.
+This package needs a Python version >=3.6 . Furthermore it uses numpy and matplotlib.
 
 We recommand to use an integrated environment of development like Spyder that you can easily download here : https://pythonhosted.org/spyder/installation.html or with the Python Scientific Distribution Anaconda : https://www.anaconda.com/download/
 This solution will automatically install all packages (numpy and matplotlib) that are required. 
