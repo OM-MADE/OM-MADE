@@ -1,0 +1,45 @@
+# =============================================================================
+
+#                     FILE PARAMETERS DATA 
+#                       TRACER TEST 3 
+#                    3 Zones (2 mobiles+1storage) - Exchanges on reach 2
+#                       2 reaches
+
+# =============================================================================
+
+# Number of fluid zones and number of reachs
+3 2
+
+# Flow rates for each fluid zones (0 if non mobile zone)
+0.0037 0.0020 0 
+
+# -----------------------------------------------------------------------------
+# REACH 1 (swallow hole to the lake)
+# Start point and length of the reach
+0. 210
+# For each fluid zone
+# Area [L2]  Dispersivity [L2/T] Degradation rate [1/T] Lateral flow [L2/T] Lateral concentration [CU]
+0.217      0.011      1.25e-4     0    0
+0.116      0.009     1.25e-4      0     0
+0.063      0.6e-9      0      0     0
+# Exchange coefficients for each zone [L2/T]
+0.0 1e-2  2.2e-5
+1e-2 0.0  2.2e-5
+2.2e-5 2.2e-5  0.0
+
+
+
+# -----------------------------------------------------------------------------
+# REACH 2 (lake + unknown zone downstream the lake)
+# Start point and length of the reach
+210. 570
+# For each fluid zone
+# Area [L2]  Dispersivity [L2/T] Degradation rate [1/T] Lateral flow [L2/T] Lateral concentration [CU]
+1.90     0.015      8.7e-7      0    0
+2.88     0.007      4e-8      0     0
+4    0.6e-9      2e-7      0     0
+# Exchange coefficients for each zone [L2/T]
+0.0 1e-7  9.8e-6
+1e-7 0.0  8.5e-7
+9.8e-6  8.5e-7  0.0
+

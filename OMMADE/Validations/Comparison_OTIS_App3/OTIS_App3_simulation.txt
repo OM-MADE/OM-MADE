@@ -1,0 +1,27 @@
+# =============================================================================
+
+#                     SIMULATION DATA
+#                     DEGRADATION VALIDATION (OTIS APP3)
+
+# =============================================================================
+
+# Space discretisation (dx,xmax)
+10 2200
+
+# Time discretisation (dt, tmax)
+144 43200
+
+# Initial concentration
+0.0 0.0
+
+# Printing information, X,T (0=all steps, 1=regular, 2=imposed)
+2 1
+
+# Number of printing locations
+2
+# Printing locations (if necessary)
+100
+2000
+
+# Number of printing times
+301
