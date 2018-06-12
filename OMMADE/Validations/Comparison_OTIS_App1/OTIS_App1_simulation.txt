@@ -1,0 +1,29 @@
+# =============================================================================
+
+#                     SIMULATION DATA
+#          MULTI-REACH FLOW W/STORAGE VALIDATION (OTIS APP1)
+
+# =============================================================================
+
+# Space discretisation (dx,xmax)
+1 669
+
+# Time discretisation (dt, tmax)
+180 56700
+
+# Initial concentration
+3.7 3.7
+
+# Printing information, X,T (0=all steps, 1=regular, 2=imposed)
+2 0
+
+# Number of printing locations
+6
+# Printing locations (if necessary)
+38
+105
+281
+432
+433
+619
+# Number of printing times

@@ -1,0 +1,23 @@
+# =============================================================================
+
+#                     FILE PARAMETERS DATA 
+#                     ADVECTION-DISPERSION VALIDATION
+
+# =============================================================================
+
+# Number of fluid zones and number of reachs
+1 1
+
+# Flow rates for each fluid zones (0 if non mobile zone)
+0.01
+
+# -----------------------------------------------------------------------------
+# REACH 1
+# Start point and length of the reach
+0. 1500
+# For each fluid zone
+# Area [L2]  Dispersivity [L2/T] Degradation rate [1/T] Lateral flow [L2/T] Lateral concentration [CU]
+1.0      0.05      0.0      0.0    0.0
+
+# Exchange coefficients for each zone [L2/T]
+0.0

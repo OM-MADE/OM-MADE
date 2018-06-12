@@ -1,0 +1,24 @@
+# =============================================================================
+
+#                     FILE PARAMETERS DATA
+#                     TWO FLOW ZONES NO EXCHANGE VALIDATION (WSADE)
+
+# =============================================================================
+
+# Number of fluid zones and number of reachs
+2 1
+
+# Flow rates for each fluid zones (0 if non mobile zone)
+10.0  5.0 
+
+# -----------------------------------------------------------------------------
+# REACH 1
+# Start point and length of the reach
+0. 200
+# For each fluid zone
+# Area [L2]  Dispersivity [L2/T] Degradation rate [1/T] Lateral flow [L2/T] Lateral concentration [CU]
+1.0      2.5      0      0     0
+1.0      1.25      0      0     0
+# Exchange coefficients for each zone
+0 0
+0 0

@@ -1,0 +1,20 @@
+# =============================================================================
+#  NAME of INPUT FILES
+#
+# Line 1 : Directory path for input and output files: it can be different from the repository of main program and _INPUTFILES.txt 
+# Line 2 : Name of Simulation parameter input File                 
+# Line 3 : Name of Boundary condition input File
+# Line 4 : Name of Physical Parameter input File
+# 
+# =============================================================================
+#Directory path for input and output files
+E:/Recherche/KARST/OMMADE/OMMADE/Demo/
+
+# Simulation input File
+_SIMUL.txt
+
+# Boundary input File
+_BOUND.txt
+
+# Parameter input File
+_PARAM.txt

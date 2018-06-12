@@ -1,0 +1,14 @@
+# =============================================================================
+
+#                     FILE BOUNDARY DATA
+#                     ADVECTION-DISPERSION VALIDATION
+
+# =============================================================================
+
+# Number of boundary points
+3
+
+# Time   Concentration for each flow type
+0.0   300.0
+1.0   0.0  
+144000.0  0.0   

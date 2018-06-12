@@ -1,0 +1,14 @@
+# =============================================================================
+
+#                     FILE BOUNDARY DATA
+#                     TWO FLOW ZONES NO EXCHANGE - VALIDATION (WSADE)
+
+# =============================================================================
+
+# Number of boundary points
+3
+
+# Time   Concentration for each flow type
+0.00   120.0 240.0
+0.01   0.0  0.0 
+10.0  0.0 0.0   

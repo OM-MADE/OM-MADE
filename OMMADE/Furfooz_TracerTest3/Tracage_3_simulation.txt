@@ -1,0 +1,25 @@
+# =============================================================================
+
+#                     SIMULATION DATA 
+
+# =============================================================================
+
+# Space discretisation (dx,xmax)
+2.5 780
+
+# Time discretisation (dt, tmax)
+360 2160000
+
+
+# Initial concentration
+0 0 0
+
+# Printing information, X,T (0=all steps, 1=regular, 2=imposed)
+1 1
+
+# Number of printing locations (advice: it must be of the form nbpx=(coeff*xmax/dx)+1)
+79
+# Printing locations (if necessary)
+
+# Number of printing times (advice: it must be of the form nbpt=(coeff*tmax/dt)+1)
+6001

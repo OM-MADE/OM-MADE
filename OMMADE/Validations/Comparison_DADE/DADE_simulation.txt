@@ -1,0 +1,27 @@
+# =============================================================================
+
+#                     SIMULATION DATA
+#                     TWO FLOW ZONES W/ EXCHANGE VALIDATION (DADE)
+
+# =============================================================================
+
+# Space discretisation (dx,xmax)
+0.2 200
+
+# Time discretisation (dt, tmax)
+0.01 10
+
+# Initial concentration
+0. 0.
+
+# Printing information, X,T (0=all steps, 1=regular, 2=imposed)
+2 1
+
+# Number of printing locations
+3
+# Printing locations (if necessary)
+10
+25
+40
+# Number of printing times
+201
