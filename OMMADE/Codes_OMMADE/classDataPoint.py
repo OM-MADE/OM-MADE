@@ -98,12 +98,16 @@ class DataPoint:
             
         return 0., 0.
         
-    def advectionPoint(self, C, nx, cin):
+    def advectionPoint(self, C, nx, cin, corr):
         """Performs one (advection) time step using explicit Lax-Wendroff scheme.
         The Lax-Wendroff scheme is second order accurate. 
         Returns and modifies the concentration."""
         
-        q = self.U_  # Adimensional flow
+        if corr < 1:
+            q = self.U_*corr  # Adimensional flow
+        else:
+            q = self.U_  # Adimensional flow
+            
         i = self.ix_ + self.ie_*nx  # Global index in concentration vector
         clim = cin[self.ie_]        # Boundary condition at x = 0
         

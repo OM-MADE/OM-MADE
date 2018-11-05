@@ -64,14 +64,19 @@ def advectionCFLloop(points, C, data, nx, ne, clim, dt):
         if (data[ie+1][nr][1] != None):
             
             # Loop until reaching the overall time step
-            while (t<dt):
+            while (t<0.999999999*dt):
                 
                 # Advection time step 
+                if t + data[ie+1][nr][1] > dt:
+                    corr = (dt - t)/data[ie+1][nr][1]
+                else:
+                    corr = 1
+                    
                 t += data[ie+1][nr][1]
             
                 # Performs advection 
                 for ix in range(nx):
-                    Cprime[ix] = points[ix + ie*nx].advectionPoint(C, nx, clim)
+                    Cprime[ix] = points[ix + ie*nx].advectionPoint(C, nx, clim, corr)
                 
                 # Updates concentration data
                 C[ie*nx:(ie+1)*nx] = Cprime[:]

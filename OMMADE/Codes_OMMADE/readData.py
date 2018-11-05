@@ -133,11 +133,11 @@ def readDataset(filename,dx,dt):
                 if flow[ie] == 0:
                     cfl[ie] = None
                 else:
-                    cfl[ie] = min(0.99*dx*float(A)/flow[ie],cfl[ie])
+                    cfl[ie] = min(dx*float(A)/flow[ie],cfl[ie])
 
             else:
                 if cfl[ie] != None:
-                    cfl[ie] = min(cfl[ie],0.99*dx*float(A)/float(flow[ie]))
+                    cfl[ie] = min(cfl[ie],dx*float(A)/float(flow[ie]))
                                     
         # Physical parameters (exchange rates)
         for ie in range(ne):
@@ -153,7 +153,7 @@ def readDataset(filename,dx,dt):
     # Flow related parameters (for advection)
     for ie in range(ne):
         if cfl[ie] != None:
-            dataset[ie+1].append((float(flow[ie]),dt/(int(dt)//cfl[ie] + 1)))
+            dataset[ie+1].append((float(flow[ie]),0.99999999999999*cfl[ie]))
         else:
             dataset[ie+1].append((float(flow[ie]),None))
         
