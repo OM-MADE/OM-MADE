@@ -75,6 +75,7 @@ ix = 0
 ic = 0
 
 x = Xprt[ix]
+rmse = []
 
 
 #Plot at location x=100m    
@@ -91,6 +92,19 @@ plt.xlabel("Time (s)")
 plt.ylabel("Concentration (g/m3)")
 plt.title("X = 100 m")
 plt.show()
+
+somme = 0
+mean = 0
+    
+for i in range(len(Tprt)):
+    
+    somme += (app3[i,ic] - dataobs[0][ix,i])**2
+    mean += app3[i,ic]
+        
+
+somme = somme**0.5 / mean
+    
+rmse.append(somme)
 
 ix = 1
 ic = 1
@@ -109,6 +123,24 @@ plt.legend(loc='best')
 plt.xlabel("Time (s)")
 plt.ylabel("Concentration (g/m3)")
 plt.title("X = 2000 m")
+plt.show()
+
+somme = 0
+mean = 0
+    
+for i in range(len(Tprt)):
+    
+    somme += (app3[i,ic] - dataobs[0][ix,i])**2
+    mean += app3[i,ic]
+        
+somme /= mean
+    
+rmse.append(somme)
+
+plt.plot([100, 2000], rmse, "k*")
+plt.yscale('log')
+plt.xlabel("Distance (m)")
+plt.ylabel("NRMSE")
 plt.show()
 
 

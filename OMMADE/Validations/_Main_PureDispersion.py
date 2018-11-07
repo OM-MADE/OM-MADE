@@ -42,7 +42,7 @@ for ix in range(1501):
         t = it*150*3600
         
         if it != 0:
-            dispersion_th[ix,it] = 350*erfc(x/(2*sqrt(d*t)))
+            dispersion_th[ix,it] = dispersion_th[0,0]*erfc(x/(2*sqrt(d*t)))
             
 # =================================================================
 #
@@ -75,6 +75,7 @@ np.save("PureDispersion\PureDispersion_Results_C",dataobs[0])
 
 locs = list(Xprt)
 ic = 0
+rmse = []
 
 for it in range(1,len(Tprt)):
 
@@ -82,15 +83,33 @@ for it in range(1,len(Tprt)):
     ic += 1
     
     # Plot of analytical results
-    plt.plot(Xprt[::50],dispersion_th[::50,it],colors[ic]+"o",label="Theory "+str(int(t/3600))+"h")
+    plt.plot(Xprt[::50],dispersion_th[::50,it]/dispersion_th[0,0],colors[ic]+"o",label="Theory "+str(int(t/3600))+"h")
     
     # Plot of simulation results
-    plt.plot(Xprt,dataobs[0][:,it],colors[ic%len(colors)]+"--",label="OM-MADE "+str(int(t/3600))+"h")
+    plt.plot(Xprt,dataobs[0][:,it]/dispersion_th[0,0],colors[ic%len(colors)]+"--",label="OM-MADE "+str(int(t/3600))+"h")
+    
+    somme = 0
+    mean = 0
+    
+    for i in range(len(Xprt)):
+        
+        somme += (dispersion_th[i,it] - dataobs[0][i,it])**2
+        mean += dispersion_th[i,it]
+        
+    somme = somme**0.5 / mean
+    
+    rmse.append(somme)
     
 #plt.legend(loc='best')
 plt.xlabel("Location (m)")
-plt.ylabel("Concentration (g/m3)")
+plt.ylabel("Normalized concentration C/C0 (-)")
 plt.title("Pure dispersion (o Theory    -- OM-MADE)")
+plt.show()
+
+plt.plot((1/3600)*Tprt[1:], rmse, "k*")
+plt.yscale('log')
+plt.xlabel("Time (h)")
+plt.ylabel("NRMSE")
 plt.show()
 
 

@@ -76,6 +76,7 @@ for ie in range(ne):
 # =================================================================
 
 ic = -1
+rmse = []
 
 #Plots of concentration in main channel
 for ix in range(len(Xprt)):
@@ -89,7 +90,21 @@ for ix in range(len(Xprt)):
         # Plot simulation results
         plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
     else:
-        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"-",label="OM-MADE "+str(x))
+        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+".",label="OM-MADE "+str(x))
+        
+        
+    if x != 433:
+        somme = 0
+        mean = 0
+    
+        for i in range(len(app1_t[:-2])):
+        
+            somme += (app1_main[i,ic] - dataobs[0][ix,2*i])**2
+            mean += app1_main[i,ic]
+        
+        somme = somme**0.5 / mean
+    
+        rmse.append(somme)    
 
     
 plt.legend(loc='best')
@@ -101,27 +116,48 @@ plt.show()
 
 #Plots of concentration in storage zone
 ic = 1
+rmse2 = []
 
 for ix in range(2,len(Xprt)):
 
     x = Xprt[ix]
-    ic += 1
-    if x!=432:
-            
+    
+    if x!=433:
+        ic += 1    
         # Plot OTIS Results
         plt.plot(app1_t[::4],app1_stock[::4,ic],"o"+colors[ic])
         
         # Plot simulation results
         plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
     else:
-        plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+"-",label="OM-MADE "+str(x))
-        ic-=1
+        plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+".",label="OM-MADE "+str(x))
+        
+    if x != 433:
+        somme = 0
+        mean = 0
+    
+        for i in range(len(app1_t[:-2])):
+        
+            somme += (app1_stock[i,ic] - dataobs[1][ix,2*i])**2
+            mean += app1_stock[i,ic]
+        
+        somme = somme**0.5 / mean
+    
+        rmse2.append(somme) 
 
     
 plt.legend(loc='best')
 plt.xlabel("Time (s)")
 plt.ylabel("Concentration (mg/l)")
 plt.title("Storage (o OTIS    -- OM-MADE)")
+plt.show()
+
+plt.plot([38,105,281,432,619], rmse, "k*", label = "Main Channel")
+plt.plot([281,432,619], rmse2, "r*", label = "Storage")
+plt.legend(loc='best')
+plt.yscale('log')
+plt.xlabel("Distance (m)")
+plt.ylabel("NRMSE")
 plt.show()
 
 

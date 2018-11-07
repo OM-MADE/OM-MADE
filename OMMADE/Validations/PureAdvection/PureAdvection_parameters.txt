@@ -16,8 +16,8 @@
 # Start point and length of the reach
 0. 1500
 # For each fluid zone
-# Area [L2]  Dispersivity [L2/T] Degradation rate [1/T] Lateral flow [L2/T] Lateral concentration [CU]
-1.0      0.0      0.0      0.0    0.0
+# Area [L2]  Dispersivity [L2/T] Degradation rate [1/T] Lateral inflow [L2/T] Lateral outflow [L2/T] Lateral concentration [CU]
+1.0      0.0      0.0      0.0    0.0    0.0
 
 # Exchange coefficients for each zone [L2/T]
 0.0

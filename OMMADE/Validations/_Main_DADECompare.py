@@ -81,6 +81,8 @@ for ie in range(ne):
 locs = list(Xprt)
 ic = -1
 
+rmse = []
+
 # Get the flux in both mobile zones
 q1 = dataset[1][-1][0]
 q2 = dataset[2][-1][0]
@@ -96,12 +98,28 @@ for ix in range(len(Xprt)):
     # Plot simulation results
     plt.plot(Tprt,(q1*dataobs[0][ix,:]+q2*dataobs[1][ix,:])/(q1+q2),colors[ic%len(colors)]+"--",label="OM-MADE "+str(x))
     
-
+    somme = 0
+    mean = 0
+    
+    for i in range(len(DADE_t)):
+        
+        somme += (DADE_CE[i,ic//2] - ((q1*dataobs[0][ix,2*i+2]+q2*dataobs[1][ix,2*i+2])/(q1+q2)))**2
+        mean += DADE_CE[i,ic//2]
+        
+    somme = somme**0.5 / mean
+    
+    rmse.append(somme)
     
 plt.legend(loc='best')
 plt.xlabel("Time (days)")
 plt.ylabel("Concentration (micro-g/l)")
 plt.title("Average concentration values (o DADE    -- OM-MADE)")
+plt.show()
+
+plt.plot(Xprt, rmse, "k*")
+plt.yscale('log')
+plt.xlabel("Distance (m)")
+plt.ylabel("NRMSE")
 plt.show()
 
 

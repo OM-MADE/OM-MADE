@@ -112,7 +112,7 @@ plt.show()
 plt.plot((1/3600)*Tprt[1:], rmse, "k*")
 plt.yscale('log')
 plt.xlabel("Time (h)")
-plt.ylabel("RMSE")
+plt.ylabel("NRMSE")
 plt.show()
 
 

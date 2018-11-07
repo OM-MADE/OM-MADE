@@ -34,13 +34,14 @@ colors = ['k','b','r','g','c','m','y','k','b','r','g','c','m','y']
 advection_th = np.zeros((1501,9))
 v = 0.01
 d = 3*3600
+dt = 300
 
 for ix in range(1501):
     for it in range(9):
         x = ix
         t = it*5*3600
         
-        if v*(t-d) <= x <= v*t:
+        if v*(t-d) <= x <= v*(t+dt-1):
             advection_th[ix,it] = 350
             
 # =================================================================
@@ -75,6 +76,7 @@ np.save("PureAdvection\PureAdvection_Results_C",dataobs[0])
 
 locs = list(Xprt)
 ic = -1
+rmse = []
 
 for it in range(len(Tprt)):
 
@@ -87,11 +89,29 @@ for it in range(len(Tprt)):
     # Plot of simulation results
     plt.plot(Xprt,dataobs[0][:,it],colors[ic%len(colors)]+"--",label="OM-MADE "+str(int(t/3600))+"h")
     
+    if it > 0:
+        somme = 0
+        mean = 0
+        
+        for i in range(len(Xprt)):
+            
+            somme += (advection_th[i,it] - dataobs[0][i,it])**2
+            mean += advection_th[i,it]
+            
+        somme = somme**0.5 / mean
+        
+        rmse.append(somme)
+    
 #plt.legend(loc='best')
 plt.xlabel("Location (m)")
 plt.ylabel("Concentration (g/m3)")
 plt.title("Pure advection (- theory    -- OM-MADE)")
 plt.show()
 
+plt.plot((1/3600)*Tprt[1:], rmse, "k*")
+plt.yscale('log')
+plt.xlabel("Time (h)")
+plt.ylabel("NRMSE")
+plt.show()
 
 

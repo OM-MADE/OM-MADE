@@ -130,15 +130,13 @@ def readDataset(filename,dx,dt):
         
         # Physical parameters (area, dispersion, degradation rate, lateral flow rate, lateral concentration)
         for ie in range(ne):
-            A, D, lam, ql, cl = lire_ligne(pfile).split()
-            #TODO Add reading of qlout
-            qlout = 0
-            dataset[ie+1].append(Parameters(float(A), float(D), float(lam), float(ql), qlout, float(cl)))
+            A, D, lam, ql, qlout, cl = lire_ligne(pfile).split()
+            dataset[ie+1].append(Parameters(float(A), float(D), float(lam), float(ql), float(qlout), float(cl)))
             
             # Updating CFL condition
             if ir == 0:
                 
-                qf[ie] += float(lx)*(float(ql) - qlout)
+                qf[ie] += float(lx)*(float(ql) - float(qlout))
 
                 if flow[ie] == 0:
                     cfl[ie] = None
@@ -148,7 +146,7 @@ def readDataset(filename,dx,dt):
             else:
                 
                 qi[ie] = qf[ie]
-                qf[ie] += float(lx)*(float(ql) - qlout)
+                qf[ie] += float(lx)*(float(ql) - float(qlout))
                 
                 if cfl[ie] != None:
                     cfl[ie] = min(cfl[ie],dx*float(A)/float(qi[ie]),dx*float(A)/float(qf[ie]))

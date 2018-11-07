@@ -77,6 +77,9 @@ for ie in range(ne):
 locs = list(Xprt)
 ic = -1
 
+rmse = []
+rmse2 = []
+
 for ix in range(len(Xprt)):
 
     x = Xprt[ix]
@@ -90,6 +93,25 @@ for ix in range(len(Xprt)):
     plt.plot(Tprt,dataobs[0][ix,:],colors[ic%len(colors)]+"--",label="OM-MADE "+str(x)+"-C0")
     plt.plot(Tprt,dataobs[1][ix,:],colors[(ic+1)%len(colors)]+"--",label="OM-MADE "+str(x)+"-C1")
     
+    somme = 0
+    mean = 0
+    somme2 = 0
+    mean2 = 0
+    
+    for i in range(len(WSADE_t)):
+        
+        somme += (WSADE_main[i,ic//2] - dataobs[0][ix,2*i])**2
+        mean += WSADE_main[i,ic//2]
+        
+        somme2 += (WSADE_sec[i,ic//2] - dataobs[1][ix,2*i])**2
+        mean2 += WSADE_sec[i,ic//2]
+        
+    somme = somme**0.5 / mean
+    somme2 = somme2**0.5 / mean2
+    
+    rmse.append(somme)
+    rmse2.append(somme2)
+    
 
     
 plt.legend(loc='best')
@@ -98,5 +120,10 @@ plt.ylabel("Concentration (micro-g/l)")
 plt.title("Local values (o WSADE    -- OM-MADE)")
 plt.show()
 
-
+plt.plot(Xprt, rmse, "k*", label = "Main Channel")
+plt.plot(Xprt, rmse2, "r*", label = "Second Channel")
+plt.yscale('log')
+plt.xlabel("Distance (m)")
+plt.ylabel("NRMSE")
+plt.show()
 
