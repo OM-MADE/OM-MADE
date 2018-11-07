@@ -89,7 +89,7 @@ for ix in range(len(Xprt)):
         # Plot simulation results
         plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
     else:
-        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+".",label="OM-MADE "+str(x))
+        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"-",label="OM-MADE "+str(x))
 
     
 plt.legend(loc='best')

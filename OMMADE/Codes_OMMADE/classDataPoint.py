@@ -29,13 +29,33 @@ class DataPoint:
         nr = len(dataset[0])
         ir = self.reachNumber(dataset,ix,dx)
         
+        # Lateral in/out flow
+        self.ql_, self.cl_ = dataset[ie+1][ir].getLateral()
+        self.qlout_ = dataset[ie+1][ir].getLateralOut()
+        
         # Adimensional flow (constraint by CFL condition)
         area = dataset[ie+1][ir].getArea()
         dtcfl = dataset[ie+1][nr][1]
         
         if dtcfl != None:
             dtcfl = min(dataset[ie+1][nr][1],dt)
-            self.U_ = dataset[ie+1][nr][0]*dtcfl/dx/area 
+            
+            # Calculation of the flow rate
+            qstart = dataset[ie+1][nr][0]
+            l = 0
+
+            if ir != 0:
+                for jr in range(ir):
+                    ql, cl = dataset[ie+1][jr].getLateral()
+                    qlout = dataset[ie+1][jr].getLateralOut()
+                    lx = dataset[0][jr][1]
+
+                    qstart += lx * (ql - qlout)
+                    l += lx
+                       
+            qstart += ((ix + 0.5)*dx - l)*(self.ql_ - self.qlout_)
+            
+            self.U_ = qstart*dtcfl/dx/area 
             
         else:
             self.U_ = None
@@ -53,8 +73,7 @@ class DataPoint:
         # degradation rate - adimensional
         self.lambda_ = dataset[ie+1][ir].getLambda()*dt
         
-        # Lateral flow (adimensional) and concentration
-        self.ql_, self.cl_ = dataset[ie+1][ir].getLateral()
+        # Lateral flow (adimensional) and concentration        
         self.ql_ *= (dt/area)
         
         

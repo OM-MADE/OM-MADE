@@ -78,6 +78,8 @@ np.save("Advection_Dispersion\AdvectionDispersion_Results_C",dataobs[0])
 locs = list(Xprt)
 ic = -1
 
+rmse= []
+
 for it in range(1,len(Tprt)):
 
     t = Tprt[it]
@@ -89,12 +91,28 @@ for it in range(1,len(Tprt)):
     # Plot of simulation results
     plt.plot(Xprt,dataobs[0][:,it],colors[ic%len(colors)]+"--",label="OM-MADE "+str(int(t/3600))+"h")
     
-
+    somme = 0
+    mean = 0
+    
+    for i in range(len(Xprt)):
+        
+        somme += (theory[i,it] - dataobs[0][i,it])**2
+        mean += theory[i,it]
+        
+    somme = somme**0.5 / mean
+    
+    rmse.append(somme)
     
 #plt.legend(loc='best')
 plt.xlabel("Location (m)")
 plt.ylabel("Concentration (g/m3)")
 plt.title("Advection dispersion (o Theory    -- OM-MADE)")
+plt.show()
+
+plt.plot((1/3600)*Tprt[1:], rmse, "k*")
+plt.yscale('log')
+plt.xlabel("Time (h)")
+plt.ylabel("RMSE")
 plt.show()
 
 

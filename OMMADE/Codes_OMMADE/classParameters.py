@@ -25,13 +25,14 @@ class Parameters:
     """Contains all physical parameters for one zone (flow type and reach) of
     the domain."""
     
-    def __init__(self,area, dispersivity, degradation, qloss, closs):   
+    def __init__(self,area, dispersivity, degradation, qlin, qlout, clin):   
         self.A_ = area
         self.D_ = dispersivity
         self.alpha_ = {}
         self.lambda_ = degradation
-        self.ql_ = qloss
-        self.cl_ = closs
+        self.ql_ = qlin
+        self.qlout_ = qlout
+        self.cl_ = clin
         
     def setAlpha(self,alpha):
         self.alpha_ = alpha.copy()
@@ -47,6 +48,9 @@ class Parameters:
         
     def getLateral(self):
         return self.ql_,self.cl_
+        
+    def getLateralOut(self):
+        return self.qlout_
         
     def getD(self):
         return self.D_

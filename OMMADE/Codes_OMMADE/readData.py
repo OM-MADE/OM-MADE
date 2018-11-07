@@ -112,6 +112,10 @@ def readDataset(filename,dx,dt):
         
     # Flow rate for each flow type
     flow = [float(Q) for Q in lire_ligne(pfile).split()]
+            
+    # Allows dealing with evolutive flow rate in space
+    qi = flow.copy()
+    qf = flow.copy()
     
     # Initialise CFL condition (time step)
     cfl = [dt for Q in flow]
@@ -123,21 +127,31 @@ def readDataset(filename,dx,dt):
         x,lx = lire_ligne(pfile).split()
         dataset[0].append((float(x),float(lx)))
         
+        
         # Physical parameters (area, dispersion, degradation rate, lateral flow rate, lateral concentration)
         for ie in range(ne):
             A, D, lam, ql, cl = lire_ligne(pfile).split()
-            dataset[ie+1].append(Parameters(float(A), float(D), float(lam), float(ql), float(cl)))
+            #TODO Add reading of qlout
+            qlout = 0
+            dataset[ie+1].append(Parameters(float(A), float(D), float(lam), float(ql), qlout, float(cl)))
             
             # Updating CFL condition
             if ir == 0:
+                
+                qf[ie] += float(lx)*(float(ql) - qlout)
+
                 if flow[ie] == 0:
                     cfl[ie] = None
                 else:
-                    cfl[ie] = min(dx*float(A)/flow[ie],cfl[ie])
+                    cfl[ie] = min(dx*float(A)/qi[ie], dx*float(A)/qf[ie],cfl[ie])
 
             else:
+                
+                qi[ie] = qf[ie]
+                qf[ie] += float(lx)*(float(ql) - qlout)
+                
                 if cfl[ie] != None:
-                    cfl[ie] = min(cfl[ie],dx*float(A)/float(flow[ie]))
+                    cfl[ie] = min(cfl[ie],dx*float(A)/float(qi[ie]),dx*float(A)/float(qf[ie]))
                                     
         # Physical parameters (exchange rates)
         for ie in range(ne):
