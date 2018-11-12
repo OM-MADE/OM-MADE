@@ -117,7 +117,7 @@ class DataPoint:
             
         return 0., 0.
         
-    def advectionPoint(self, C, nx, cin, corr):
+    def advectionPoint_explicite(self, C, nx, cin, corr):
         """Performs one (advection) time step using explicit Lax-Wendroff scheme.
         The Lax-Wendroff scheme is second order accurate. 
         Returns and modifies the concentration."""
@@ -145,6 +145,31 @@ class DataPoint:
                 return q*(q/2 - 1/2)*C[i+1] + (1-q**2)*C[i] + q*(q/2 + 1/2)*C[i-1]
     
         return C[self.ix_]
+
+
+    def advectionPoint_cranknicholson(self, A, nx):
+        """Performs one (advection) time step using centered scheme.
+        The centered scheme is second order accurate. 
+        Modifies the system matrix A."""
+        
+        q = self.U_  # Adimensional flow
+        i = self.ix_ + self.ie_*nx  # Global index in concentration vector
+        
+        # If non-advective transport - do nothing
+        if q != None:
+            
+            if self.ix_ == 0:
+                A[i,i+1] += q/2
+    
+            elif self.ix_ == nx-1:
+                
+                A[i,i] += q/2
+                A[i, i-1] -= q/2
+    
+            else:
+                
+                A[i,i+1] += q/2
+                A[i,i-1] -= q/2
 
 
     def dispersionPoint(self, A, nx):

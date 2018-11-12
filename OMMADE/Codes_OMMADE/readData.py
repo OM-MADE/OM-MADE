@@ -30,6 +30,10 @@ def readGeneralData(filename):
     
     pfile = open(filename,'r')
     
+    # Read numerical scheme
+    scheme = lire_ligne(pfile).split()
+    scheme = int(scheme[0])
+    
     # Read space discretisation information
     dx,xmax = lire_ligne(pfile).split()
     dx = float(dx)
@@ -91,11 +95,11 @@ def readGeneralData(filename):
         
     pfile.close()
     
-    return dx,nx,dt,tmax,c0,Xprt,Tprt
+    return dx,nx,dt,tmax,c0,Xprt,Tprt, scheme
     
 
 
-def readDataset(filename,dx,dt):
+def readDataset(filename,dx,dt, scheme):
     """Generates the dataset from a given file."""
     
     pfile = open(filename,'r')
@@ -133,23 +137,25 @@ def readDataset(filename,dx,dt):
             A, D, lam, ql, qlout, cl = lire_ligne(pfile).split()
             dataset[ie+1].append(Parameters(float(A), float(D), float(lam), float(ql), float(qlout), float(cl)))
             
-            # Updating CFL condition
-            if ir == 0:
-                
-                qf[ie] += float(lx)*(float(ql) - float(qlout))
-
-                if flow[ie] == 0:
-                    cfl[ie] = None
+            # Updating CFL condition 
+            
+            if scheme == 0:
+                if ir == 0:
+                    
+                    qf[ie] += float(lx)*(float(ql) - float(qlout))
+    
+                    if flow[ie] == 0:
+                        cfl[ie] = None
+                    else:
+                        cfl[ie] = min(dx*float(A)/qi[ie], dx*float(A)/qf[ie],cfl[ie])
+    
                 else:
-                    cfl[ie] = min(dx*float(A)/qi[ie], dx*float(A)/qf[ie],cfl[ie])
-
-            else:
-                
-                qi[ie] = qf[ie]
-                qf[ie] += float(lx)*(float(ql) - float(qlout))
-                
-                if cfl[ie] != None:
-                    cfl[ie] = min(cfl[ie],dx*float(A)/float(qi[ie]),dx*float(A)/float(qf[ie]))
+                    
+                    qi[ie] = qf[ie]
+                    qf[ie] += float(lx)*(float(ql) - float(qlout))
+                    
+                    if cfl[ie] != None:
+                        cfl[ie] = min(cfl[ie],dx*float(A)/float(qi[ie]),dx*float(A)/float(qf[ie]))
                                     
         # Physical parameters (exchange rates)
         for ie in range(ne):
@@ -164,10 +170,15 @@ def readDataset(filename,dx,dt):
     
     # Flow related parameters (for advection)
     for ie in range(ne):
-        if cfl[ie] != None:
-            dataset[ie+1].append((float(flow[ie]),0.99999999999999*cfl[ie]))
+        
+        if scheme == 0:
+            if cfl[ie] != None:
+                dataset[ie+1].append((float(flow[ie]),0.99999999999999*cfl[ie]))
+            else:
+                dataset[ie+1].append((float(flow[ie]),None))
+                
         else:
-            dataset[ie+1].append((float(flow[ie]),None))
+            dataset[ie+1].append((float(flow[ie]),cfl[ie]))
         
     pfile.close()
     return dataset

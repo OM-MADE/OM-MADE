@@ -9,6 +9,6 @@
 3
 
 # Time   Concentration for each flow type
-0.0   300.0
+0.0   250.0
 1.0   0.0  
 144000.0  0.0   

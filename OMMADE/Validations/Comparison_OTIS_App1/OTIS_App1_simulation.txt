@@ -5,6 +5,9 @@
 
 # =============================================================================
 
+# Numerical scheme (0 = operator split, 1 = Crank-Nicholson)
+1
+
 # Space discretisation (dx,xmax)
 1 669
 

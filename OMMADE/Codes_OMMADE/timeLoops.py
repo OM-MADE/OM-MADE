@@ -21,11 +21,11 @@ from classDataPoint import DataPoint
 from readData import readDataset
 
 
-def initialise(filedat, dt, dx, c0, nx):
+def initialise(filedat, dt, dx, c0, nx, scheme):
     """Initialisation for the simulation.
     Returns the dataset, the point information and the initial concentration."""
     
-    dataset = readDataset(filedat, dx, dt)
+    dataset = readDataset(filedat, dx, dt, scheme)
     ne = len(dataset)
     ne = ne-1
     
@@ -76,13 +76,13 @@ def advectionCFLloop(points, C, data, nx, ne, clim, dt):
             
                 # Performs advection 
                 for ix in range(nx):
-                    Cprime[ix] = points[ix + ie*nx].advectionPoint(C, nx, clim, corr)
+                    Cprime[ix] = points[ix + ie*nx].advectionPoint_explicite(C, nx, clim, corr)
                 
                 # Updates concentration data
                 C[ie*nx:(ie+1)*nx] = Cprime[:]
 
 
-def timeloop(points, C, data, nx, bound, dx, dt, tmax, Xprt, Tprt):
+def timeloop(points, C, data, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme):
     
     """Performs the simulation. Returns the concentration for each flow types at 
     each concentration printing time and printing step.
@@ -105,6 +105,8 @@ def timeloop(points, C, data, nx, bound, dx, dt, tmax, Xprt, Tprt):
     BC = np.zeros(nx*ne)
     clim = np.zeros(ne)
     
+    I = np.eye(nx*ne)
+    
     # Filling the system matrix and second member for implicit scheme
     for point in points:
             
@@ -112,6 +114,10 @@ def timeloop(points, C, data, nx, bound, dx, dt, tmax, Xprt, Tprt):
         point.dispersionPoint(A, nx)
         point.massloss(A, B, nx)
         point.massexchange(A, nx)
+        
+        if scheme == 1:
+            point.advectionPoint_cranknicholson(A, nx)
+            AE = I - A
     
     # Time loop
     for t in range(nt):
@@ -121,11 +127,20 @@ def timeloop(points, C, data, nx, bound, dx, dt, tmax, Xprt, Tprt):
             clim[ie] = np.interp(t*dt,bound[0],bound[1][ie])
             BC[ie*nx] = points[ie*nx].Dm_*clim[ie]
 
-        # Perform advection
-        advectionCFLloop(points, C, data, nx, ne, clim, dt)
+            if scheme == 1:
+                BC[ie*nx] += points[ie*nx].U_*clim[ie]/2
+
+        if scheme == 0:
+            # Perform advection
+            advectionCFLloop(points, C, data, nx, ne, clim, dt)
             
-        # Perform dispersion, mass exchange and mass loss
-        C = np.linalg.solve(A,B+BC+C)
+            # Perform dispersion, mass exchange and mass loss
+            C = np.linalg.solve(A,B+BC+C)
+            
+        else:
+            
+            # Perform advection, dispersion, mass exchange and mass loss
+            C = np.linalg.solve(I - 0.5*AE, B + BC + np.dot(I + 0.5*AE, C))
         
         # Saving data if corresponding to  a printing time
         # The printing time need to correspond to a simulation time (no time interpolation)

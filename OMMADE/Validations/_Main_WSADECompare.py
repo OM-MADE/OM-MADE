@@ -17,6 +17,7 @@ from readData import *
 from timeLoops import *
 from classDataPoint import *
 from classParameters import *
+from time import time
 
 colors = ['k','b','r','g','c','m','y','k','b','r','g','c','m','y']
 
@@ -57,12 +58,15 @@ boundfile = "Comparison_WSADE\WSADE_boundary.txt"
 
 print("Initialisation...")
 
-dx,nx,dt,tmax,c0,Xprt,Tprt = readGeneralData(simfile)
+dx,nx,dt,tmax,c0,Xprt,Tprt,scheme = readGeneralData(simfile)
 bound = readBound(boundfile)
-dataset, C, points = initialise(datafile,dt,dx, c0, nx)
+dataset, C, points = initialise(datafile,dt,dx, c0, nx, scheme)
 
 print("Start Computing...")
-dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt)
+t0 = time()
+dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme)
+t1 = time()
+print(t1-t0)
 
 ne = len(dataset)-1
 for ie in range(ne):

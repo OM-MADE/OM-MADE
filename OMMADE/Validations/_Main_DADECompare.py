@@ -61,12 +61,12 @@ boundfile = "Comparison_DADE\DADE_boundary.txt"
 
 print("Initialisation...")
 
-dx,nx,dt,tmax,c0,Xprt,Tprt = readGeneralData(simfile)
+dx,nx,dt,tmax,c0,Xprt,Tprt,scheme = readGeneralData(simfile)
 bound = readBound(boundfile)
-dataset, C, points = initialise(datafile,dt,dx, c0, nx)
+dataset, C, points = initialise(datafile,dt,dx, c0, nx, scheme)
 
 print("Start Computing...")
-dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt)
+dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme)
 
 ne = len(dataset)-1
 for ie in range(ne):

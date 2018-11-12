@@ -44,13 +44,13 @@ datafile = path + lire_ligne(infile).rstrip('\n')
 #Read the Data in the different input files
 print("Initialisation...")
 
-dx,nx,dt,tmax,c0,Xprt,Tprt = readGeneralData(simfile)
+dx,nx,dt,tmax,c0,Xprt,Tprt,scheme = readGeneralData(simfile)
 bound = readBound(boundfile)
-dataset, C, points = initialise(datafile,dt,dx, c0, nx)
+dataset, C, points = initialise(datafile,dt,dx, c0, nx, scheme)
 
 #Computation
 print("Start Computing...")
-dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt)
+dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme)
 
 infile.close()
 
