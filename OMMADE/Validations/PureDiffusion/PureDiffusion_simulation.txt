@@ -1,0 +1,28 @@
+# =============================================================================
+
+#                     SIMULATION DATA
+#                     PURE DISPERSION VALIDATION
+
+# =============================================================================
+
+# Numerical scheme (0 = operator split, 1 = Crank-Nicholson)
+1
+
+# Space discretisation (dx,xmax)
+1 1500
+
+# Time discretisation (dt, tmax)
+9000 4320000
+
+# Initial concentration
+0
+
+# Printing information, X,T (0=all steps, 1=regular, 2=imposed)
+0 1
+
+# Number of printing locations
+
+# Printing locations (if necessary)
+
+# Number of printing times
+9

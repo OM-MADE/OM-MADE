@@ -81,15 +81,17 @@ rmse = []
 for ix in range(len(Xprt)):
 
     x = Xprt[ix]
-    if x!=433:
-        ic += 1
+    ic += 1
+    if x!=432:
+        
         # Plot OTIS Results
         plt.plot(app1_t,app1_main[:,ic],"o"+colors[ic])
         
         # Plot simulation results
         plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
     else:
-        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+".",label="OM-MADE "+str(x))
+        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"-",label="OM-MADE "+str(x))
+        ic-=1
         
         
     if x != 433:
@@ -120,16 +122,17 @@ rmse2 = []
 for ix in range(2,len(Xprt)):
 
     x = Xprt[ix]
-    
-    if x!=433:
-        ic += 1    
+    ic+=1
+    if x!=432:
+            
         # Plot OTIS Results
         plt.plot(app1_t[::4],app1_stock[::4,ic],"o"+colors[ic])
         
         # Plot simulation results
         plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
     else:
-        plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+".",label="OM-MADE "+str(x))
+        plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+"-",label="OM-MADE "+str(x))
+        ic-=1
         
     if x != 433:
         somme = 0
