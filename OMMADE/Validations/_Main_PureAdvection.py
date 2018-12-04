@@ -11,6 +11,7 @@ Input files are in a PureAdvection directory
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import colors as mcolors
+from time import time
 
 import os
 os.chdir("..\Codes_OMMADE")
@@ -41,7 +42,7 @@ for ix in range(1501):
         x = ix
         t = it*5*3600
         
-        if v*(t-d) <= x <= v*(t+dt-1):
+        if v*(t-d) <= x <= v*(t+dt):
             advection_th[ix,it] = 350
             
 # =================================================================
@@ -63,8 +64,9 @@ bound = readBound(boundfile)
 dataset, C, points = initialise(datafile,dt,dx, c0, nx, scheme)
 
 print("Start Computing...")
+time0 = time()
 dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme)
-
+print(time() - time0)
 
 np.save("PureAdvection\PureAdvection_Results_C",dataobs[0])
 

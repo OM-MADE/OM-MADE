@@ -36,7 +36,7 @@ os.chdir("..\Validations")
 # C = Ci * erf(x/2*rac(Dt))
 
 theory = np.zeros((1501,9))
-d = 0.05
+d = 0.0025
 u = 0.01
 ma = 900
 

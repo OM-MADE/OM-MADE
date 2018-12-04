@@ -6,7 +6,7 @@
 # =============================================================================
 
 # Numerical scheme (0 = operator split, 1 = Crank-Nicholson)
-1
+0
 
 # Space discretisation (dx,xmax)
 1 669
@@ -21,12 +21,11 @@
 2 0
 
 # Number of printing locations
-6
+5
 # Printing locations (if necessary)
 38
 105
 281
-432
 433
 619
 # Number of printing times

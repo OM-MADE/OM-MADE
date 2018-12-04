@@ -11,6 +11,7 @@ Input files are in a PureDispersion directory
 import numpy as np
 import matplotlib.pyplot as plt
 from math import erfc,sqrt
+from time import time
 
 import os
 os.chdir("..\Codes_OMMADE")
@@ -62,7 +63,9 @@ bound = readBound(boundfile)
 dataset, C, points = initialise(datafile,dt,dx, c0, nx, scheme)
 
 print("Start Computing...")
+time0 = time()
 dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme)
+print(time() - time0)
 
 np.save("PureDispersion\PureDispersion_Results_C",dataobs[0])
 

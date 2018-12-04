@@ -12,7 +12,7 @@
 1 1500
 
 # Time discretisation (dt, tmax)
-300 144000
+250 144000
 
 # Initial concentration
 0

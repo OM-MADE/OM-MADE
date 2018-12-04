@@ -11,6 +11,7 @@ Input files are in the Comparison_OTIS_App1 directory
 
 import numpy as np
 import matplotlib.pyplot as plt
+from time import time
 
 import os
 os.chdir("..\Codes_OMMADE")
@@ -62,7 +63,9 @@ bound = readBound(boundfile)
 dataset, C, points = initialise(datafile,dt,dx, c0, nx, scheme)
 
 print("Start Computing...")
+time0 = time()
 dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme)
+print(time() - time0)
 
 ne = len(dataset)-1
 for ie in range(ne):
@@ -81,29 +84,24 @@ rmse = []
 for ix in range(len(Xprt)):
 
     x = Xprt[ix]
-    if x!=433:
-        ic += 1
-        # Plot OTIS Results
-        plt.plot(app1_t,app1_main[:,ic],"o"+colors[ic])
+    ic += 1
+    # Plot OTIS Results
+    plt.plot(app1_t,app1_main[:,ic],"o"+colors[ic])
         
-        # Plot simulation results
-        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
-    else:
-        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+".",label="OM-MADE "+str(x))
-        
-        
-    if x != 433:
-        somme = 0
-        mean = 0
+    # Plot simulation results
+    plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
+
+    somme = 0
+    mean = 0
     
-        for i in range(len(app1_t[:-2])):
+    for i in range(len(app1_t[:-2])):
         
-            somme += (app1_main[i,ic] - dataobs[0][ix,2*i])**2
-            mean += app1_main[i,ic]
+        somme += (app1_main[i,ic] - dataobs[0][ix,2*i])**2
+        mean += app1_main[i,ic]
         
-        somme = somme**0.5 / mean
+    somme = somme**0.5 / mean
     
-        rmse.append(somme)    
+    rmse.append(somme)    
 
     
 plt.legend(loc='best')
@@ -121,28 +119,24 @@ for ix in range(2,len(Xprt)):
 
     x = Xprt[ix]
     
-    if x!=433:
-        ic += 1    
-        # Plot OTIS Results
-        plt.plot(app1_t[::4],app1_stock[::4,ic],"o"+colors[ic])
+    ic += 1    
+    # Plot OTIS Results
+    plt.plot(app1_t[::4],app1_stock[::4,ic],"o"+colors[ic])
         
-        # Plot simulation results
-        plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
-    else:
-        plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+".",label="OM-MADE "+str(x))
+    # Plot simulation results
+    plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
         
-    if x != 433:
-        somme = 0
-        mean = 0
+    somme = 0
+    mean = 0
     
-        for i in range(len(app1_t[:-2])):
+    for i in range(len(app1_t[:-2])):
         
-            somme += (app1_stock[i,ic] - dataobs[1][ix,2*i])**2
-            mean += app1_stock[i,ic]
+        somme += (app1_stock[i,ic] - dataobs[1][ix,2*i])**2
+        mean += app1_stock[i,ic]
         
-        somme = somme**0.5 / mean
+    somme = somme**0.5 / mean
     
-        rmse2.append(somme) 
+    rmse2.append(somme) 
 
     
 plt.legend(loc='best')
@@ -151,8 +145,8 @@ plt.ylabel("Concentration (mg/l)")
 plt.title("Storage (o OTIS    -- OM-MADE)")
 plt.show()
 
-plt.plot([38,105,281,432,619], rmse, "k*", label = "Main Channel")
-plt.plot([281,432,619], rmse2, "r*", label = "Storage")
+plt.plot([38,105,281,433,619], rmse, "k*", label = "Main Channel")
+plt.plot([281,433,619], rmse2, "r*", label = "Storage")
 plt.legend(loc='best')
 plt.yscale('log')
 plt.xlabel("Distance (m)")

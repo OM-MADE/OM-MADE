@@ -161,20 +161,21 @@ def timeloop(points, C, data, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme):
                         dataobs[ie][ixp,it] = C[i0 + ie*nx]
                         continue
                     
-                    for ix in range(i0+1,nx):
+                    if Xprt[ixp] < 0.5*dx:
+                        dataobs[ie][ixp,it] = C[ie*nx]
+                        continue
+                    
+                    for ix in range(i0,nx-1):
                         check = False
                         
-                        if (ix-1)*dx < Xprt[ixp] <= ix*dx:
-                            
-                            dataobs[ie][ixp,it] = ((ix*dx-Xprt[ixp])*C[ix-1 + ie*nx]+(Xprt[ixp]-(ix-1)*dx)*C[ix + ie*nx])/dx
+                        if (ix+0.5)*dx <= Xprt[ixp] <= (ix+1.5)*dx:
+                            dataobs[ie][ixp,it] = ((Xprt[ixp]-(ix+0.5)*dx)*C[ix+1 + ie*nx]+((ix+1.5)*dx-Xprt[ixp])*C[ix + ie*nx])/dx
+
                             check = True
 
-                        elif ix*dx < Xprt[ixp]:
+                        else:
                             i0 += 1
                             
-                        else:
-                            dataobs[ie][ixp,it] = C[ix-1 + ie*nx]
-                            check = True
                             
                         if check:
                             break

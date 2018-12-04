@@ -10,6 +10,7 @@ Input files are in the Comparison_DADE directory
 
 import numpy as np
 import matplotlib.pyplot as plt
+from time import time
 
 import os
 os.chdir("..\Codes_OMMADE")
@@ -66,7 +67,9 @@ bound = readBound(boundfile)
 dataset, C, points = initialise(datafile,dt,dx, c0, nx, scheme)
 
 print("Start Computing...")
+time0 = time()
 dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme)
+print(time() - time0)
 
 ne = len(dataset)-1
 for ie in range(ne):

@@ -10,6 +10,7 @@ Input files are in the Comparison_OTIS_App3 directory.
 
 import numpy as np
 import matplotlib.pyplot as plt
+from time import time
 
 
 import os
@@ -60,7 +61,9 @@ bound = readBound(boundfile)
 dataset, C, points = initialise(datafile,dt,dx, c0, nx, scheme)
 
 print("Start Computing...")
+time0 = time()
 dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme)
+print(time() - time0)
 
 np.save("Comparison_OTIS_App3\OTIS_App3_Results_C",dataobs[0])
 
