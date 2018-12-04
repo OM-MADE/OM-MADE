@@ -68,7 +68,7 @@ print("Start Computing...")
 t0 = time()
 dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, scheme)
 t1 = time()
-print(t1-t0)
+print("t1-t0=",t1-t0)
 
 np.save("Advection_Dispersion\AdvectionDispersion_Results_C",dataobs[0])
 

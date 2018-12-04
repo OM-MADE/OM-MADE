@@ -85,6 +85,7 @@ for ix in range(len(Xprt)):
 
     x = Xprt[ix]
     ic += 1
+<<<<<<< HEAD
     # Plot OTIS Results
     plt.plot(app1_t,app1_main[:,ic],"o"+colors[ic])
         
@@ -93,6 +94,23 @@ for ix in range(len(Xprt)):
 
     somme = 0
     mean = 0
+=======
+    if x!=432:
+        
+        # Plot OTIS Results
+        plt.plot(app1_t,app1_main[:,ic],"o"+colors[ic])
+        
+        # Plot simulation results
+        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
+    else:
+        plt.plot(Tprt,dataobs[0][ix,:],colors[ic]+"-",label="OM-MADE "+str(x))
+        ic-=1
+        
+        
+    if x != 433:
+        somme = 0
+        mean = 0
+>>>>>>> f45538f4b2c6b8a709ea566144f1ef1b42d7bc81
     
     for i in range(len(app1_t[:-2])):
         
@@ -118,6 +136,7 @@ rmse2 = []
 for ix in range(2,len(Xprt)):
 
     x = Xprt[ix]
+<<<<<<< HEAD
     
     ic += 1    
     # Plot OTIS Results
@@ -125,6 +144,19 @@ for ix in range(2,len(Xprt)):
         
     # Plot simulation results
     plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
+=======
+    ic+=1
+    if x!=432:
+            
+        # Plot OTIS Results
+        plt.plot(app1_t[::4],app1_stock[::4,ic],"o"+colors[ic])
+        
+        # Plot simulation results
+        plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+"--",label="OM-MADE "+str(x))
+    else:
+        plt.plot(Tprt[:],dataobs[1][ix,:],colors[ic]+"-",label="OM-MADE "+str(x))
+        ic-=1
+>>>>>>> f45538f4b2c6b8a709ea566144f1ef1b42d7bc81
         
     somme = 0
     mean = 0

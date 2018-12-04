@@ -8,7 +8,7 @@
 # 
 # =============================================================================
 #Directory path for input and output files
-E:/Recherche/KARST/OMMADE/OMMADE/Demo/
+E:/Recherche/KARST/OMMADE/OMMADE_Git/OM-MADE/OMMADE/Demo/
 
 # Simulation input File
 _SIMUL.txt
