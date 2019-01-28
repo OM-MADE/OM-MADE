@@ -19,7 +19,7 @@
 0. 210
 # For each fluid zone
 # Area [L2]  Dispersivity [L2/T] Degradation rate [1/T] Lateral inflow [L2/T] Lateral outflow [L2/T] Lateral concentration [CU]
-0.217      0.011      1.25e-4     0    0    0
+0.217      0.014      1.25e-4     0    0    0
 0.116      0.009     1.25e-4      0     0    0
 0.063      0.6e-9      0      0     0    0
 # Exchange coefficients for each zone [L2/T]
@@ -35,7 +35,7 @@
 210. 570
 # For each fluid zone
 # Area [L2]  Dispersivity [L2/T] Degradation rate [1/T] Lateral inflow [L2/T] Lateral outflow [L2/T] Lateral concentration [CU]
-1.90     0.015      8.7e-7      0    0    0
+1.90     0.015      9.4e-7      0    0    0
 2.88     0.007      4e-8      0     0    0
 4    0.6e-9      2e-7      0     0    0
 # Exchange coefficients for each zone [L2/T]
