@@ -22,31 +22,7 @@ from time import time
 
 colors = ['k','b','r','g','c','m','y','k','b','r','g','c','m','y']
 
-# =================================================================
-#
-#               THEORETICAL DATA WRITING
-#
-# =================================================================
 os.chdir("..\Validations")
-
-# Analytical solution analytique of advection - dispersion transport in the case
-# of a dirac injection of M/A = 900 g/m, with a dispersion coeffcition D =0.05 m²/s 
-# with V= 0.01m/s:
-# 
-# C = Ci * erf(x/2*rac(Dt))
-
-theory = np.zeros((1501,9))
-d = 0.0025
-u = 0.01
-ma = 900
-
-for ix in range(1501):
-    for it in range(9):
-        x = ix
-        t = it*5*3600
-        
-        if it != 0:
-            theory[ix,it] = (ma/sqrt(4*pi*d*t))*exp(-(x-u*t)**2/(4*d*t))
             
 # =================================================================
 #
@@ -71,6 +47,40 @@ t1 = time()
 print("t1-t0=",t1-t0)
 
 np.save("Advection_Dispersion\AdvectionDispersion_Results_C",dataobs[0])
+
+# =================================================================
+#
+#               THEORETICAL DATA WRITING
+#
+# =================================================================
+
+# Analytical solution of advection - dispersion transport in the case
+# of a dirac injection:
+# 
+# C = Ci * erf(x/2*rac(Dt))
+
+# Time discretisation for theoretical solution
+theory = np.zeros((len(Xprt),len(Tprt)))
+
+# Retrieving parameters
+d = dataset[1][0].getD() # Dispersivity
+flow = dataset[1][1][0] # Flow rate
+u = flow / dataset[1][0].getArea() # Velocity
+
+# Calculating injected mass
+ma = sum([dt*np.interp(t, bound[0], bound[1][0])*flow for t in np.arange(0, tmax, dt)])
+
+# Calculation of the analytical solution
+ix = 0
+for x in Xprt:
+    it = 0
+    for t in Tprt:
+        
+        if t != 0:
+            theory[ix,it] = (ma/sqrt(4*pi*d*t))*exp(-(x-u*t)**2/(4*d*t))
+            
+        it += 1
+    ix += 1
 
 # =================================================================
 #
