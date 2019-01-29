@@ -3,9 +3,11 @@
 OM-MADE is an open-source progam written in Python v3. It is designed to simulate one-dimensional solute transport in multiple exchanging conduits and storage zones.
 
 If you use OM-MADE, please cite the following reference : 
-"Tinet A.J., Collon P., Philippe C., Dewaide L., Hallet V. (Subm.). OM-MADE: an open-source program to simulate one-dimensional solute transport in multiple exchanging conduits and storage zones. "
+"Tinet A.J., Collon P., Philippe C., Dewaide L., Hallet V. (Subm.). OM-MADE: an open-source program to simulate one-dimensional solute transport in multiple exchanging conduits and storage zones. Computers & Geosciences, Subm. "
 
 This paper details all technical aspects of OM-MADE, the hypothesis, the equations, the numerical schemes and the validations made against analytical and numerical solutions.
+
+You can access a more detailed documentation on description, installation and input parameters in the User's documentation (OMMADE_Doc.pdf: https://github.com/OM-MADE/OM-MADE/blob/master/OMMADE_Doc.pdf)
 
 # Installation
 
