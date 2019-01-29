@@ -21,29 +21,6 @@ from classDataPoint import *
 from classParameters import *
 
 colors = ['k','b','r','g','c','m','y','k','b','r','g','c','m','y']
-
-# =================================================================
-#
-#               THEORETICAL DATA WRITING
-#
-# =================================================================
-
-# Flow is V=0.01m/s. The injection step corresponds to a distance of 
-# 108m starting in x = V*t - 108.
-# Results are observed every 5h.
-
-advection_th = np.zeros((1501,9))
-v = 0.01
-d = 3*3600
-dt = 300
-
-for ix in range(1501):
-    for it in range(9):
-        x = ix
-        t = it*5*3600
-        
-        if v*(t-d) <= x <= v*(t+dt):
-            advection_th[ix,it] = 350
             
 # =================================================================
 #
@@ -69,6 +46,50 @@ dataobs = timeloop(points, C, dataset, nx, bound, dx, dt, tmax, Xprt, Tprt, sche
 print(time() - time0)
 
 np.save("PureAdvection\PureAdvection_Results_C",dataobs[0])
+
+
+# =================================================================
+#
+#               THEORETICAL DATA WRITING
+#
+# =================================================================
+
+# Flow is V=0.01m/s. The injection step corresponds to a distance of 
+# 108m starting in x = V*t - 108.
+# Results are observed every 5h.
+
+
+advection_th = np.zeros((len(Xprt),len(Tprt)))
+
+# Retrieving parameters
+flow = dataset[1][1][0] # Flow rate
+v = flow / dataset[1][0].getArea() # Velocity
+
+# Describing the injection step
+tstart = None
+tstop = 0
+cinject = max(bound[1][0])
+for i in range(len(bound[0])):
+
+    if bound[1][0][i] == cinject and tstart == None:
+        tstart = bound[0][i]
+
+    if bound[1][0][i] == 0 and tstart != None:
+        break
+    
+    tstop = bound[0][i]
+
+ix = 0
+for x in Xprt:
+    it = 0
+    for t in Tprt:
+        
+        if v*(t - tstart - tstop) <= x <= v*(t - tstart + dt):
+            advection_th[ix,it] = cinject
+    
+        it +=1
+        
+    ix += 1
 
 # =================================================================
 #

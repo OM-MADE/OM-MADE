@@ -10,6 +10,7 @@
 # Time   Concentration for each flow type 
 #(Zones 1 and 2 mobile, 3 storage)
 0   150150   0  0
+359 150150   0  0
 360      0   0  0
 36000      0   0  0
 2160000  0   0  0
