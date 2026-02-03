@@ -33,7 +33,7 @@ of adapted main programs are thus provided in the folders "validations" and "Fur
 
 The OM-MADE main developpers are: 
   - Dr. Anne-Julie Tinet (anne-julie.tinet@univ-lorraine.fr) - Associate Professor - Université de Lorraine, CNRS, GeoRessouces laboratory
-  - Dr. Pauline Collon ( pauline.collon@univ-lorraine.fr) - Associate Professor - Université de Lorraine, CNRS, GeoRessouces laboratory
+  - Dr. Pauline Collon ( pauline.collon@univ-lorraine.fr) - Professor - Université de Lorraine, CNRS, GeoRessouces laboratory
   
   # License
   
